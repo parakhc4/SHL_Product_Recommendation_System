@@ -37,7 +37,7 @@ def recommend_endpoint(query: QueryRequest):
             "remote_support": row["remote_testing"],
             "test_type": [t.strip() for t in row["test_type"].split(",")],
             "duration": int(re.search(r"(\d+)", str(row["Assessment Length"])).group(1)) if pd.notnull(row["Assessment Length"]) else None,
-            "description": "This test evaluates relevant skills for the specified job role."
+            "description": "Test Descriptions are available on the website."
         })
 
     return {
