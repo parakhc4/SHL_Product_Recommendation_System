@@ -102,9 +102,4 @@ if st.button("🔍 Recommend Tests") and query.strip():
     st.dataframe(results_display.reset_index(drop=True), use_container_width=True)
 
 
-
-st.markdown("---")
-st.markdown("### 👤 Built by Parakh Chaudhary")
-st.image("myphoto.png", width=150)
-st.markdown("[🔗 LinkedIn](https://linkedin.com/in/parakhchaudhary)")
-st.markdown("[💻 GitHub](https://github.com/parakhc4)")
+    
