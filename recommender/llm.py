@@ -1,6 +1,7 @@
 import time
 from openai import OpenAI
-from settings import MONSTER_API_KEY
+import streamlit as st
+MONSTER_API_KEY = st.secrets["MONSTER_API_KEY"]
 from .config import MONSTER_MODEL_MAP, LLM_NAME
 
 def setup_monster_api():
