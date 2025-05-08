@@ -1,6 +1,7 @@
 streamlit
 sentence-transformers
 scikit-learn
+uvicorn
 pandas
 numpy
 openai
