@@ -4,7 +4,8 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer
 from openai import OpenAI
-from settings import MONSTER_API_KEY
+# from settings import MONSTER_API_KEY
+MONSTER_API_KEY = st.secrets["MONSTER_API_KEY"]
 import time
 
 # --- SETUP ---
