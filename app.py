@@ -100,3 +100,11 @@ if st.button("🔍 Recommend Tests") and query.strip():
     results_display = results[["name", "test_type", "Assessment Length", "url", "similarity"]].copy()
     results_display["url"] = results_display["url"].apply(lambda u: f"https://www.shl.com{u}" if not u.startswith("http") else u)
     st.dataframe(results_display.reset_index(drop=True), use_container_width=True)
+
+
+
+st.markdown("---")
+st.markdown("### 👤 Built by Parakh Chaudhary")
+st.image("myphoto.png", width=150)
+st.markdown("[🔗 LinkedIn](https://linkedin.com/in/parakhchaudhary)")
+st.markdown("[💻 GitHub](https://github.com/parakhc4)")
