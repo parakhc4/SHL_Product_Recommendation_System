@@ -2,11 +2,11 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from sentence_transformers import SentenceTransformer
 from openai import OpenAI
-# from settings import MONSTER_API_KEY
-MONSTER_API_KEY = st.secrets["MONSTER_API_KEY"]
 import time
+
+MONSTER_API_KEY = st.secrets["MONSTER_API_KEY"]
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 
 # --- SETUP ---
 SIMILARITY_THRESHOLD = 0.4
@@ -20,9 +20,9 @@ monster_ai_model_name = {
 }
 
 # --- LOAD DATA ---
-df = pd.read_csv("dataset/dataset_final.csv")
-embeddings = np.load("dataset/dataset_final.npy")
-model = SentenceTransformer("all-MiniLM-L6-v2")
+df = pd.read_csv("dataset/dataset_openai.csv")
+embeddings = np.load("dataset/dataset_openai.npy")
+openai_client = OpenAI(api_key=OPENAI_API_KEY)
 
 # --- MONSTER API SETUP ---
 def setup_monster_api():
@@ -52,9 +52,16 @@ def call_monster_api(user_input, context, client, retries=3, wait_time=5):
     return "Could not generate a response."
 
 # --- RECOMMENDATION LOGIC ---
+def get_openai_embedding(text):
+    response = openai_client.embeddings.create(
+        model="text-embedding-ada-002",
+        input=text
+    )
+    return response.data[0].embedding
+
 def recommend_tests(user_query):
-    query_embedding = model.encode([user_query])
-    similarities = cosine_similarity(query_embedding, embeddings)[0]
+    query_embedding = get_openai_embedding(user_query)
+    similarities = cosine_similarity([query_embedding], embeddings)[0]
     sorted_indices = np.argsort(similarities)[::-1]
     filtered_indices = [idx for idx in sorted_indices if similarities[idx] >= SIMILARITY_THRESHOLD]
     if not filtered_indices:
@@ -100,6 +107,3 @@ if st.button("🔍 Recommend Tests") and query.strip():
     results_display = results[["name", "test_type", "Assessment Length", "url", "similarity"]].copy()
     results_display["url"] = results_display["url"].apply(lambda u: f"https://www.shl.com{u}" if not u.startswith("http") else u)
     st.dataframe(results_display.reset_index(drop=True), use_container_width=True)
-
-
-    
