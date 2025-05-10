@@ -4,7 +4,7 @@ from .config import SIMILARITY_THRESHOLD, MAX_RESULTS
 from .llm import call_monster_api
 
 def recommend_tests(user_query, model, df, embeddings):
-    query_embedding = model.encode([user_query])
+    query_embedding = model([user_query])
     similarities = cosine_similarity(query_embedding, embeddings)[0]
     sorted_indices = similarities.argsort()[::-1]
     filtered_indices = [i for i in sorted_indices if similarities[i] >= SIMILARITY_THRESHOLD]

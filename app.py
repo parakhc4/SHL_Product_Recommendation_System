@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from openai import OpenAI
 import time
+import re
 
 MONSTER_API_KEY = st.secrets["MONSTER_API_KEY"]
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
@@ -100,10 +101,20 @@ if st.button("🔍 Recommend Tests") and query.strip():
         client = setup_monster_api()
         llm_output = generate_llm_response(query, results.head(5), client)
 
-    st.subheader("📝 LLM Summary")
     st.markdown(llm_output)
 
     st.subheader("📋 Top Recommendations")
-    results_display = results[["name", "test_type", "Assessment Length", "url", "similarity"]].copy()
-    results_display["url"] = results_display["url"].apply(lambda u: f"https://www.shl.com{u}" if not u.startswith("http") else u)
-    st.dataframe(results_display.reset_index(drop=True), use_container_width=True)
+    results_display = results[["name", "url", "similarity", "Assessment Length"]].copy()
+
+    results_display["name"] = results_display.apply(
+        lambda row: f"[{row['name']}](https://www.shl.com{row['url']})" if not row['url'].startswith("http") else f"[{row['name']}]({row['url']})",
+        axis=1
+    )
+    results_display["Match %"] = results_display["similarity"].apply(lambda x: f"{x * 100:.2f}%")
+    results_display["Time Required"] = results_display["Assessment Length"].apply(
+        lambda x: (
+            f"{match.group()} minutes" if pd.notnull(x) and (match := re.search(r"\d+", str(x))) else "N/A"
+        )
+    )
+    final_df = results_display[["name", "Match %", "Time Required"]]
+    st.write(final_df.to_markdown(index=False), unsafe_allow_html=True)
