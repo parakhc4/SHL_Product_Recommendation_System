@@ -10,5 +10,6 @@ __pycache__/
 .git/
 .gitignore
 *.md
-*.csv
-*.ipynb
+# Don't include Streamlit UI in API build
+app.py
+start.sh
