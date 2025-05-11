@@ -6,6 +6,8 @@ from recommender.llm import setup_monster_api
 import pandas as pd
 import re
 from dotenv import load_dotenv
+import os
+print("🔐 OPENAI prefix:", os.getenv("OPENAI_API_KEY")[:5] if os.getenv("OPENAI_API_KEY") else "❌ Not found")
 
 # Initialize FastAPI app
 app = FastAPI(title="SHL Assessment Recommendation API")
