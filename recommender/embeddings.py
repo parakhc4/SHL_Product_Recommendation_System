@@ -1,14 +1,16 @@
 # recommender/embeddings.py
-
 import os
 import numpy as np
 import pandas as pd
 from openai import OpenAI
+from dotenv import load_dotenv
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Load OpenAI key from env or secrets loader
 def load_openai_client():
+    load_dotenv()  # ✅ this loads .env into os.environ
     return OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
 
 # Load catalog and embeddings
 

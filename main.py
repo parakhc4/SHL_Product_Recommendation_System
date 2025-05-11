@@ -5,6 +5,7 @@ from recommender.logic import recommend_tests
 from recommender.llm import setup_monster_api
 import pandas as pd
 import re
+from dotenv import load_dotenv
 
 # Initialize FastAPI app
 app = FastAPI(title="SHL Assessment Recommendation API")

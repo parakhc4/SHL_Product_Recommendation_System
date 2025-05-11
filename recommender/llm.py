@@ -1,7 +1,10 @@
 import time
 from openai import OpenAI
+import os
 import streamlit as st
-MONSTER_API_KEY = st.secrets["MONSTER_API_KEY"]
+from dotenv import load_dotenv
+MONSTER_API_KEY = os.environ.get("MONSTER_API_KEY")
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 from .config import MONSTER_MODEL_MAP, LLM_NAME
 
 def setup_monster_api():

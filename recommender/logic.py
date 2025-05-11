@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from .config import SIMILARITY_THRESHOLD, MAX_RESULTS
 from .llm import call_monster_api
+from dotenv import load_dotenv
 
 def recommend_tests(user_query, model, df, embeddings):
     query_embedding = model([user_query])
