@@ -1,4 +1,4 @@
-# 🧠 SHL Assessment Recommendation System
+# 🧠 SHL Assessment Recommendation System - https://shlxparakh.streamlit.app/
 
 A semantic search engine that recommends relevant SHL assessments based on natural language queries like job descriptions or hiring needs. Built as part of SHL's Generative AI Intern Assignment.
 
