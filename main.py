@@ -8,7 +8,9 @@ import re
 from dotenv import load_dotenv
 import os
 print("🔐 OPENAI prefix:", os.getenv("OPENAI_API_KEY")[:5] if os.getenv("OPENAI_API_KEY") else "❌ Not found")
-
+print("Current dir:", os.getcwd())
+print("Files in /app:", os.listdir('.'))
+print("Files in /app/dataset:", os.listdir('./dataset'))
 # Initialize FastAPI app
 app = FastAPI(title="SHL Assessment Recommendation API")
 

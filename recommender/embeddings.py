@@ -15,9 +15,14 @@ def load_openai_client():
 # Load catalog and embeddings
 
 def load_data():
-    df = pd.read_csv("dataset/dataset_openai.csv")
-    embeddings = np.load("dataset/dataset_openai.npy")
-    return df, embeddings
+    try:
+        print("Loading dataset...")
+        df = pd.read_csv("dataset/dataset_openai.csv")
+        embeddings = np.load("dataset/dataset_openai.npy")
+        print(f"Loaded {len(df)} records and {embeddings.shape} vectors.")
+        return df, embeddings
+    except Exception as e:
+        print("Failed to load dataset:", str(e))
 
 def load_model():
     # Returns the embedding caller, since model is OpenAI hosted
