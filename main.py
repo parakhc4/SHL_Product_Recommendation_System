@@ -11,24 +11,20 @@ print("🔐 OPENAI prefix:", os.getenv("OPENAI_API_KEY")[:5] if os.getenv("OPENA
 print("Current dir:", os.getcwd())
 print("Files in /app:", os.listdir('.'))
 print("Files in /app/dataset:", os.listdir('./dataset'))
-# Initialize FastAPI app
+
 app = FastAPI(title="SHL Assessment Recommendation API")
 
-# Load assets
 df, embeddings = load_data()
 model = load_model()
 client = setup_monster_api()
 
-# Request schema
 class QueryRequest(BaseModel):
     prompt: str
 
-# Health check
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
 
-# Main recommendation endpoint
 @app.post("/recommend")
 def recommend_endpoint(query: QueryRequest):
     user_input = query.prompt
